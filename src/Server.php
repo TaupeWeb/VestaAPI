@@ -112,4 +112,21 @@ class Server
 		}
 		return $users;
 	}
+
+	public function addUser(string $username, string $password, string $email): User
+	{
+		$return = $this->doCall('v-add-user', [$username, $password, $email]);
+		if (!ReturnCode::isOkay($return)) {
+			throw new Exception("Could not create user");
+		}
+		//TODO this could be made faster
+		return $this->getUser($username);
+	}
+
+	public function getUser(string $username): User
+	{
+		$data = $this->doRequest("v-list-user", ["admin", "json"]);
+		$json = json_decode($data, true);
+		return User::fromArray($username, $json, $this);
+	}
 }
