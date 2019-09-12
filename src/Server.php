@@ -49,12 +49,25 @@ class Server
 
 	public function doRequest(string $command, array $data): string
 	{
+		return $this->doCURL($this->generatePostData($command, $data));
+	}
+
+	public function doCall(string $command, array $data): int
+	{
+		$post = $this->generatePostData($command, $data);
+		$post['returncode'] = 'yes';
+		$return = $this->doCURL($post);
+		return intval($return);
+	}
+
+	private function doCURL(array $data): string
+	{
 		$curl = curl_init(sprintf("%s://%s:%d/api/", $this->protocol, $this->hostname, $this->port));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $this->validate_ssl ? 2 : 0);
 		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $this->generatePostData($command, $data));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 		$response = curl_exec($curl);
 		curl_close($curl);
