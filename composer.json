@@ -1,0 +1,21 @@
+{
+    "name": "taupe/vesta-api",
+    "description": "PHP wrapper for Vesta API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sven Mol",
+            "email": "sven@taupeweb.nl"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Taupe\\Vesta\\": "src/"
+        }
+    }
+}
