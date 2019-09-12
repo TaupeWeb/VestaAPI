@@ -89,4 +89,14 @@ class Server
 			throw new Exception(substr($response, $matchLength));
 		}
 	}
+
+	public function getUsers(): array
+	{
+		$json = $this->doRequest("v-list-users", ["json"]);
+		$users = json_decode($json, true);
+		foreach ($users as $name => $data) {
+			$users[$name] = User::fromArray($name, $data, $this);
+		}
+		return $users;
+	}
 }
