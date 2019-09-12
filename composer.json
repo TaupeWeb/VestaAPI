@@ -1,5 +1,6 @@
 {
     "name": "taupe/vesta-api",
+    "version": "0.0.1",
     "description": "PHP wrapper for Vesta API",
     "type": "library",
     "license": "MIT",
