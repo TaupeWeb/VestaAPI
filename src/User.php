@@ -48,4 +48,11 @@ class User
 	{
 		return $this->lastName;
 	}
+
+	public function delete():void{
+		$return=$this->server->doCall("v-delete-user",[$this->username]);
+		if(!ReturnCode::isOkay($return)){
+			throw new \Exception("Could not remove user");
+		}
+	}
 }
